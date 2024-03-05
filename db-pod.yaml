@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+  name: db
+spec:
+  containers:
+  - image: 334109771446.dkr.ecr.us-east-1.amazonaws.com/ass1-prod-db:v14.0
+    name: db
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
