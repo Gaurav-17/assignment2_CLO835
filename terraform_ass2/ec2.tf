@@ -24,6 +24,7 @@ resource "aws_instance" "k8s" {
     sudo yum install docker -y
     sudo systemctl start docker
     sudo usermod -a -G docker ec2-user
+    sudo systemctl restart docker
     curl -sLo kind https://kind.sigs.k8s.io/dl/v0.11.0/kind-linux-amd64
     sudo install -o root -g root -m 0755 kind /usr/local/bin/kind
     rm -f ./kind
@@ -31,7 +32,7 @@ resource "aws_instance" "k8s" {
     sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
     rm -f ./kubectl
     echo -e 'kind: Cluster\napiVersion: kind.x-k8s.io/v1alpha4\nnodes:\n- role: control-plane\n  image: kindest/node:v1.19.11@sha256:07db187ae84b4b7de440a73886f008cf903fcf5764ba8106a9fd5243d6f32729\n  extraPortMappings:\n  - containerPort: 30000\n    hostPort: 30000\n  - containerPort: 30001\n    hostPort: 30001' > kind.yaml
-    kind create cluster --config kind.yaml​
+    kind create cluster --config kind.yaml
   EOF
 
   vpc_security_group_ids = [
