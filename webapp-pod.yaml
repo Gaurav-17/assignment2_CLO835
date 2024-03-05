@@ -1,12 +1,19 @@
 apiVersion: v1
 kind: Pod
 metadata:
+  namespace: webapp
   labels:
-  name: webapp
+  name: app-gp
 spec:
   containers:
   - image: 334109771446.dkr.ecr.us-east-1.amazonaws.com/ass1-prod-app:v15.0
     name: webapp
+    env:
+    - name: DBPWD
+      value: password
+    ports:
+    - containerPort: 8080
+      name: mysql
     resources: {}
   dnsPolicy: ClusterFirst
   restartPolicy: Always
