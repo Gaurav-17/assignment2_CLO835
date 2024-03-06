@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: webapp
+  name: webapp-deployment
+  labels:
+    app: employee
+    version: v1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: employee
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: employee
+        version: v1
+    spec:
+      containers:
+      - name: webapp
+        image: 334109771446.dkr.ecr.us-east-1.amazonaws.com/ass1-prod-app:v15.0
+        env:
+        - name: DBUSER
+          value: "root" 
+        - name: DBPWD
+          value: "password"
+        - name: DBPORT
+          value: "3306"
+        - name: DBHOST
+          value: "10.244.0.6"
+        ports:
+        - containerPort: 8080
+          name: mysql
+        resources: {}
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
